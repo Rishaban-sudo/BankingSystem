@@ -1,7 +1,7 @@
 package dao;
 
 import com.bank.Bank;
-import com.bank.Transaction;
+import com.model.Transaction;
 import utils.MySQLConnection;
 
 import java.sql.*;

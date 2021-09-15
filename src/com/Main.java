@@ -1,8 +1,8 @@
 package com;
 
 import com.bank.Bank;
-import com.bank.flow.AdminFlow;
-import com.bank.flow.CustomerFlow;
+import flow.AdminFlow;
+import flow.CustomerFlow;
 
 import java.util.Scanner;
 
@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) {
         Bank bank = Bank.getInstance();
         Scanner sc = new Scanner(System.in);
-        int ch = 0;
+        int ch;
 
 
         while (true) {

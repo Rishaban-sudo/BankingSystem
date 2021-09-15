@@ -1,4 +1,4 @@
-package com.bank.flow;
+package flow;
 
 import com.bank.Bank;
 import dao.BankAdminDAO;

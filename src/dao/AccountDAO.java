@@ -1,6 +1,6 @@
 package dao;
 
-import com.bank.Account;
+import com.model.Account;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
 package dao;
 
-import com.bank.Account;
+import com.model.Account;
 import utils.MySQLConnection;
 
 import java.sql.*;
@@ -31,16 +31,17 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void addAccount(Account account) {
-        try {
-            PreparedStatement st = con.prepareStatement("INSERT INTO account(account_id,acc_type_cd, cust_id, open_date, close_date, last_activity_date, status, open_branch_id, avail_balance) \n" +
-                    "VALUES (NULL,?,?,CURRENT_DATE(),NULL,CURRENT_DATE(),'ACTIVE',?,0.0);");
+
+        String sql = "INSERT INTO account(account_id,acc_type_cd, cust_id, open_date, close_date, last_activity_date, status, open_branch_id, avail_balance) \n" +
+                     "VALUES (NULL,?,?,CURRENT_DATE(),NULL,CURRENT_DATE(),'ACTIVE',?,0.0);";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
 
             st.setString(1,account.getAccountType());
             st.setInt(2,account.getCustId());
             st.setInt(3,account.getOpenBranchId());
 
             st.executeUpdate();
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,17 +53,13 @@ public class AccountDAOImpl implements AccountDAO {
 
         List<Account> accounts = new LinkedList<>();
 
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             ResultSet rs = st.executeQuery("SELECT * FROM account");
 
             while (rs.next()) {
-                accounts.add(new Account(rs.getInt(1), rs.getString(2),rs.getInt(3),
-                                         rs.getString(4),rs.getString(5),rs.getString(6),
-                                         rs.getString(7),rs.getInt(8),rs.getFloat(9)));
+                accounts.add(Account.fromResultSet(rs));
             }
-
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -75,8 +72,8 @@ public class AccountDAOImpl implements AccountDAO {
     public List<Account> getCustomerAccounts(int custId) {
         List<Account> accounts = new LinkedList<>();
 
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             ResultSet rs = st.executeQuery("SELECT * FROM account WHERE cust_id = "+custId);
 
             while (rs.next()) {
@@ -85,7 +82,6 @@ public class AccountDAOImpl implements AccountDAO {
                         rs.getString(7),rs.getInt(8),rs.getFloat(9)));
             }
 
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,17 +92,17 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deposit(float amount,int accountId) {
-        try {
 
-            PreparedStatement st = con.prepareStatement("UPDATE account " +
-                                                        "SET avail_balance = avail_balance + ? " +
-                                                         "WHERE account_id = ?");
+        String sql = "UPDATE account " +
+                     "SET avail_balance = avail_balance + ? " +
+                     "WHERE account_id = ?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+
             st.setFloat(1,amount);
             st.setInt(2,accountId);
 
             st.executeUpdate();
-            st.close();
-
             updateLastActivityDate(accountId);
 
         } catch (SQLException e) {
@@ -117,9 +113,9 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void withdraw(float amount, int accountId) {
 
-        try {
+        try (Statement st2 = con.createStatement()) {
 
-            Statement st2 = con.createStatement();
+
             ResultSet rs = st2.executeQuery("SELECT avail_balance FROM account WHERE account_id="+accountId);
 
             float availBalance = 0.0f;
@@ -144,7 +140,6 @@ public class AccountDAOImpl implements AccountDAO {
             st.setInt(2,accountId);
 
             st.executeUpdate();
-            st.close();
 
             updateLastActivityDate(accountId);
 
@@ -156,8 +151,8 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void updateLastActivityDate(int accountId) {
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             st.executeUpdate("""
                     UPDATE account
                     SET last_activity_date = CURRENT_DATE()

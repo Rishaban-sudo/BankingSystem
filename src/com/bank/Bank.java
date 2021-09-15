@@ -1,6 +1,9 @@
 package com.bank;
 
 
+import com.model.Account;
+import com.model.Customer;
+import com.model.Transaction;
 import dao.*;
 
 import java.util.*;
@@ -35,7 +38,7 @@ public class Bank {
         System.out.println("Enter zipcode :");
         String zipcode = sc.next();
 
-        System.out.println("Enter state : ");
+        System.out.println("Enter state code: ");
         String state = sc.next();
 
         System.out.println("Enter contact no :");
@@ -76,8 +79,11 @@ public class Bank {
 
         System.out.println("##### Available type of accounts :  #######");
         Map<String,String> accTypes =  accountTypeDAO.getAccountTypes();
-        for (Map.Entry<String,String> entry : accTypes.entrySet())
+
+        for (Map.Entry<String,String> entry : accTypes.entrySet()) {
             System.out.println(entry.getKey() + " " +entry.getValue());
+        }
+
 
         accountTypeDAO.disconnect();
         System.out.println();

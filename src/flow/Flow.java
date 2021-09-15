@@ -1,4 +1,4 @@
-package com.bank.flow;
+package flow;
 
 public interface Flow {
     void start();

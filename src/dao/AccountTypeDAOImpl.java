@@ -37,8 +37,8 @@ public class AccountTypeDAOImpl implements AccountTypeDAO {
 
         Map<String,String> accTypes = new HashMap<>();
 
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             ResultSet rs =  st.executeQuery("SELECT name,acc_type_cd FROM account_type");
 
 
@@ -46,7 +46,6 @@ public class AccountTypeDAOImpl implements AccountTypeDAO {
                 accTypes.put(rs.getString(1), rs.getString(2));
             }
 
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

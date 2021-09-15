@@ -1,4 +1,7 @@
-package com.bank;
+package com.model;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Account {
     private int accountId;
@@ -30,6 +33,13 @@ public class Account {
         this.openBranchId = openBranchId;
         this.availBalance = availBalance;
     }
+
+    public static Account fromResultSet(ResultSet rs) throws SQLException {
+        return new Account(rs.getInt(1), rs.getString(2),rs.getInt(3),
+                rs.getString(4),rs.getString(5),rs.getString(6),
+                rs.getString(7),rs.getInt(8),rs.getFloat(9));
+    }
+
 
     public int getAccountId() {
         return accountId;

@@ -1,6 +1,6 @@
 package dao;
 
-import com.bank.Customer;
+import com.model.Customer;
 import utils.MySQLConnection;
 
 import java.sql.*;
@@ -35,8 +35,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
         List<Customer> customerList = new LinkedList<>();
 
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             ResultSet rs = st.executeQuery("SELECT * FROM customer");
 
             while (rs.next()) {
@@ -54,9 +54,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public void addCustomer(Customer customer) {
-        try {
-            PreparedStatement st = con.prepareStatement("INSERT INTO customer(cust_id, fname, lname, city, zipcode, state, contact_no,email,password)" +
-                    "VALUES(NULL,?,?,?,?,?,?,?,?)");
+
+        String sql = "INSERT INTO customer(cust_id, fname, lname, city, zipcode, state, contact_no,email,password) " +
+                     "VALUES(NULL,?,?,?,?,?,?,?,?)";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+
             st.setString(1, customer.getFname());
             st.setString(2, customer.getLname());
             st.setString(3, customer.getCity());
@@ -68,7 +71,6 @@ public class CustomerDAOImpl implements CustomerDAO {
 
             st.executeUpdate();
 
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,9 +80,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Override
     public Customer authenticateCustomer(String email, String password) {
 
-        try {
-            PreparedStatement st = con.prepareStatement("SELECT * FROM customer " +
-                                                       "WHERE email=? AND password=?");
+        try (PreparedStatement st = con.prepareStatement("SELECT * FROM customer " +
+                                                         "WHERE email=? AND password=?")) {
 
             st.setString(1,email);
             st.setString(2,password);
@@ -91,7 +92,6 @@ public class CustomerDAOImpl implements CustomerDAO {
                 return Customer.fromResultSet(rs);
             }
 
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

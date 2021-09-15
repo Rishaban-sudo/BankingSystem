@@ -29,9 +29,12 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 
     @Override
     public boolean authenticateAdmin(String username, String password) {
-        try {
-            PreparedStatement st = con.prepareStatement("SELECT * FROM bank_admin " +
-                                                             "WHERE username=? AND password=?");
+
+        String sql ="SELECT * FROM bank_admin " +
+                    "WHERE username=? AND password=?";
+
+        try (PreparedStatement st = con.prepareStatement(sql)) {
+
             st.setString(1,username);
             st.setString(2,password);
 

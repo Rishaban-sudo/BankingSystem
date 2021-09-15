@@ -32,8 +32,8 @@ public class BranchDAOImpl implements BranchDAO {
 
     @Override
     public void displayBranchInfo() {
-        try {
-            Statement st = con.createStatement();
+        try (Statement st = con.createStatement()) {
+
             ResultSet rs =  st.executeQuery("SELECT * FROM branch");
 
             System.out.println("branch_id    " + "name    " + "address    " + "city    "+ "state    " + "zip    ");
@@ -47,7 +47,6 @@ public class BranchDAOImpl implements BranchDAO {
                                    rs.getString(6) + "    ");
             }
 
-            st.close();
 
         } catch (SQLException e) {
             e.printStackTrace();

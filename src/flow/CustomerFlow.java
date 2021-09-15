@@ -1,7 +1,7 @@
-package com.bank.flow;
+package flow;
 
 import com.bank.Bank;
-import com.bank.Customer;
+import com.model.Customer;
 import dao.CustomerDAO;
 
 import java.util.Scanner;
