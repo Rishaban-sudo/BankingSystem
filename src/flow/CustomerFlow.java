@@ -37,7 +37,8 @@ public class CustomerFlow implements Flow {
                 System.out.println("4.View my accounts ");
                 System.out.println("5.Money Transfer (transaction)");
                 System.out.println("6.View my transactions ");
-                System.out.println("7.LogOut");
+                System.out.println("7.Delete account ");
+                System.out.println("8.LogOut");
                 ch = sc.nextInt();
 
                 switch (ch) {
@@ -60,6 +61,9 @@ public class CustomerFlow implements Flow {
                         bank.viewMyAccountTransactions(customer.getId());
                         break;
                     case 7:
+                        bank.deleteAccount(customer.getId());
+                        break;
+                    case 8:
                         return;
                 }
             }

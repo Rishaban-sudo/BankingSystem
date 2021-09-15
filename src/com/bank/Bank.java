@@ -249,4 +249,24 @@ public class Bank {
         }
     }
 
+    public void deleteAccount(int custId) {
+        Scanner sc = new Scanner(System.in);
+        AccountDAO accountDAO = AccountDAO.getInstance();
+        accountDAO.connect();
+
+        System.out.println("Enter the accountId : ");
+        int accountId = sc.nextInt();
+
+        if(isValidAccountId(accountDAO,accountId,custId)) {
+            if (accountDAO.deleteAccount(accountId)) {
+                System.out.println("Account Deleted !");
+            } else {
+                System.out.println("Account not Deleted !!");
+            }
+        } else {
+            System.out.println("Invalid account !!!");
+        }
+
+    }
+
 }

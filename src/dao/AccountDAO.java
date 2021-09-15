@@ -16,4 +16,5 @@ public interface AccountDAO extends Dao {
     void deposit(float amount,int accountId);
     void withdraw(float amount,int accountId);
     void updateLastActivityDate(int accountId);
+    boolean deleteAccount(int accountId);
 }
