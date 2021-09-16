@@ -50,6 +50,8 @@ public class Bank {
         System.out.println("Enter password :");
         String password = sc.next();
 
+        password = HashPwd.hashPassword(password);
+
         customerDAO.addCustomer(new Customer(0,fname,lname,city,zipcode,state,contactNo,email,password));
         customerDAO.disconnect();
     }

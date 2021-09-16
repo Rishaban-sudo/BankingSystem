@@ -1,5 +1,6 @@
 package dao;
 
+import com.bank.HashPwd;
 import com.model.Customer;
 import utils.MySQLConnection;
 
@@ -79,6 +80,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public Customer authenticateCustomer(String email, String password) {
+
+        password = HashPwd.hashPassword(password);
 
         try (PreparedStatement st = con.prepareStatement("SELECT * FROM customer " +
                                                          "WHERE email=? AND password=?")) {

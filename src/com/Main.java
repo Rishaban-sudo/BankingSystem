@@ -14,6 +14,7 @@ public class Main {
         int ch;
 
 
+
         while (true) {
             System.out.println("------- Banking System ------------");
             System.out.println("1.Login ");
@@ -23,19 +24,11 @@ public class Main {
             ch= sc.nextInt();
 
             switch (ch) {
-                case 1:
-                    new CustomerFlow().start();
-                    break;
-                case 2:
-                    new AdminFlow().start();
-                    break;
-                case 3:
-                    bank.regCustomer();
-                    break;
-                case 4:
-                    System.exit(0);
-                default:
-                    System.out.println("Enter valid num !!!");
+                case 1 -> new CustomerFlow().start();
+                case 2 -> new AdminFlow().start();
+                case 3 -> bank.regCustomer();
+                case 4 -> System.exit(0);
+                default -> System.out.println("Enter valid num !!!");
             }
 
         }

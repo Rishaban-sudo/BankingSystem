@@ -1,5 +1,6 @@
 package dao;
 
+import com.bank.HashPwd;
 import utils.MySQLConnection;
 
 import java.sql.*;
@@ -32,6 +33,8 @@ public class BankAdminDAOImpl implements BankAdminDAO {
 
         String sql ="SELECT * FROM bank_admin " +
                     "WHERE username=? AND password=?";
+
+        password = HashPwd.hashPassword(password);
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
 

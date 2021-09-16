@@ -65,6 +65,8 @@ public class CustomerFlow implements Flow {
                         break;
                     case 8:
                         return;
+                    default:
+                        System.out.println("Enter valid no");
                 }
             }
         }
