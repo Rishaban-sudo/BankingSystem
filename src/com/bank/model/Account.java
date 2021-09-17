@@ -1,11 +1,13 @@
-package com.model;
+package com.bank.model;
+
+import com.bank.Bank;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Account {
     private int accountId;
-    private String accountType;
+    private Bank.AccountType accountType;
     private int custId;
     private String openDate;
     private String closeDate;
@@ -15,7 +17,7 @@ public class Account {
     private float availBalance;
 
     public Account(int accountId,
-                   String accountType,
+                   Bank.AccountType accountType,
                    int custId,
                    String openDate,
                    String closeDate,
@@ -35,7 +37,8 @@ public class Account {
     }
 
     public static Account fromResultSet(ResultSet rs) throws SQLException {
-        return new Account(rs.getInt(1), rs.getString(2),rs.getInt(3),
+
+        return new Account(rs.getInt(1), Bank.getAccountType(rs.getInt(2)),rs.getInt(3),
                 rs.getString(4),rs.getString(5),rs.getString(6),
                 rs.getString(7),rs.getInt(8),rs.getFloat(9));
     }
@@ -45,7 +48,7 @@ public class Account {
         return accountId;
     }
 
-    public String getAccountType() {
+    public Bank.AccountType getAccountType() {
         return accountType;
     }
 

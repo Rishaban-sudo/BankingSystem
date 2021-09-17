@@ -1,16 +1,40 @@
 package com.bank;
 
 
-import com.model.Account;
-import com.model.Customer;
-import com.model.Transaction;
-import dao.*;
+import com.bank.model.Account;
+import com.bank.model.Customer;
+import com.bank.model.Transaction;
+import com.bank.dao.*;
 
 import java.util.*;
 
 public class Bank {
 
     private static Bank bank;
+
+    public enum AccountType {
+        CA("Current account"),
+        FD("Fixed deposit"),
+        RD("Recurring deposit"),
+        SA("Salary account"),
+        SAV("Savings account");
+
+        private final String accTypeName;
+
+        AccountType(String accTypeName) {
+            this.accTypeName = accTypeName;
+        }
+
+        public String getAccTypeName() {
+            return this.accTypeName;
+        }
+
+        @Override
+        public String toString() {
+            return this.accTypeName;
+        }
+    }
+
     private Bank() {
 
     }
@@ -71,6 +95,29 @@ public class Bank {
         customerDAO.disconnect();
     }
 
+    public static AccountType getAccountType(int ordinal) {
+
+        switch (ordinal) {
+            case 0 -> {
+                return AccountType.CA;
+            }
+            case 1 -> {
+                return AccountType.FD;
+            }
+            case 2 -> {
+                return AccountType.RD;
+            }
+            case 3 -> {
+                return AccountType.SA;
+            }
+            case 4 -> {
+                return AccountType.SAV;
+            }
+        }
+
+        return null;
+    }
+
     public void createAccount(int custId) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the account details : ");
@@ -80,18 +127,23 @@ public class Bank {
         accountTypeDAO.connect();
 
         System.out.println("##### Available type of accounts :  #######");
-        Map<String,String> accTypes =  accountTypeDAO.getAccountTypes();
 
-        for (Map.Entry<String,String> entry : accTypes.entrySet()) {
-            System.out.println(entry.getKey() + " " +entry.getValue());
+        int i=1;
+        for(AccountType accountType : AccountType.values()) {
+            System.out.println((i++) +". "+  accountType.getAccTypeName());
         }
 
+        System.out.println("Enter your choice :");
+        int ch = sc.nextInt();
 
-        accountTypeDAO.disconnect();
+        AccountType accountType = getAccountType(--ch);
+
+        if(accountType == null){
+            System.out.println("Enter valid account type choice num !!");
+            return;
+        }
         System.out.println();
 
-        System.out.println("Enter account type : (enter choice in short form ex:SAV)");
-        String accType = sc.next();
 
         BranchDAO branchDAO = BranchDAO.getInstance();
         branchDAO.connect();
@@ -105,7 +157,7 @@ public class Bank {
 
         AccountDAO accountDAO = AccountDAO.getInstance();
         accountDAO.connect();
-        accountDAO.addAccount(new Account(0,accType,custId,null,null,null,null,openBranchId,0.0f));
+        accountDAO.addAccount(new Account(0,accountType,custId,null,null,null,null,openBranchId,0.0f));
         accountDAO.disconnect();
 
         System.out.println("Account Created Successfully");

@@ -1,8 +1,8 @@
-package flow;
+package com.bank.flow;
 
 import com.bank.Bank;
-import com.model.Customer;
-import dao.CustomerDAO;
+import com.bank.model.Customer;
+import com.bank.dao.CustomerDAO;
 
 import java.util.Scanner;
 

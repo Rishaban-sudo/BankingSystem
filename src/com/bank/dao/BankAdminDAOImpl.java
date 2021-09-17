@@ -1,32 +1,11 @@
-package dao;
+package com.bank.dao;
 
 import com.bank.HashPwd;
-import utils.MySQLConnection;
+
 
 import java.sql.*;
 
-public class BankAdminDAOImpl implements BankAdminDAO {
-
-    private Connection con = null;
-
-    @Override
-    public void connect() {
-        try {
-            con = MySQLConnection.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void disconnect() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+public class BankAdminDAOImpl extends DaoImpl implements BankAdminDAO {
 
     @Override
     public boolean authenticateAdmin(String username, String password) {

@@ -1,8 +1,8 @@
-package dao;
+package com.bank.dao;
 
 import com.bank.Bank;
-import com.model.Transaction;
-import utils.MySQLConnection;
+import com.bank.model.Transaction;
+import com.bank.utils.MySQLConnection;
 
 import java.sql.*;
 import java.util.LinkedList;

@@ -1,6 +1,6 @@
-package dao;
+package com.bank.dao;
 
-import utils.MySQLConnection;
+import com.bank.utils.MySQLConnection;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,28 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class AccountTypeDAOImpl implements AccountTypeDAO {
-
-    private Connection con = null;
-
-    @Override
-    public void connect() {
-        try {
-            con = MySQLConnection.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void disconnect() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
+public class AccountTypeDAOImpl extends DaoImpl implements AccountTypeDAO {
 
     @Override
     public Map<String,String> getAccountTypes() {

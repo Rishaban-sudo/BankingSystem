@@ -1,6 +1,6 @@
-package dao;
+package com.bank.dao;
 
-import com.model.Customer;
+import com.bank.model.Customer;
 
 import java.util.List;
 

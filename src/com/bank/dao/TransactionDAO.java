@@ -1,6 +1,6 @@
-package dao;
+package com.bank.dao;
 
-import com.model.Transaction;
+import com.bank.model.Transaction;
 
 import java.util.List;
 
@@ -17,5 +17,4 @@ public interface TransactionDAO extends Dao{
     boolean startTransaction(int srcAccountId,int destAccountId,float amt,int custId);
     List<Transaction> getTransactionLog(int accountId,int txnType);
     List<Transaction> getAllTransactionLog();
-
 }

@@ -1,4 +1,4 @@
-package utils;
+package com.bank.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,7 +11,7 @@ public class MySQLConnection {
     public static Connection getConnection() throws SQLException {
         Connection connection = null;
 
-        try (FileInputStream fis = new FileInputStream("src/utils/Mysqldb.properties")) {
+        try (FileInputStream fis = new FileInputStream("src/com/bank/utils/Mysqldb.properties")) {
 
             Properties properties = new Properties();
             properties.load(fis);

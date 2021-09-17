@@ -1,8 +1,8 @@
 package com;
 
 import com.bank.Bank;
-import flow.AdminFlow;
-import flow.CustomerFlow;
+import com.bank.flow.AdminFlow;
+import com.bank.flow.CustomerFlow;
 
 import java.util.Scanner;
 

@@ -1,33 +1,13 @@
-package dao;
+package com.bank.dao;
 
-import com.model.Account;
-import utils.MySQLConnection;
+import com.bank.Bank;
+import com.bank.model.Account;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AccountDAOImpl implements AccountDAO {
-
-    private Connection con = null;
-
-    @Override
-    public void connect() {
-        try {
-            con = MySQLConnection.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void disconnect() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+public class AccountDAOImpl extends DaoImpl implements AccountDAO {
 
     @Override
     public void addAccount(Account account) {
@@ -37,7 +17,9 @@ public class AccountDAOImpl implements AccountDAO {
 
         try (PreparedStatement st = con.prepareStatement(sql)) {
 
-            st.setString(1,account.getAccountType());
+            Bank.AccountType accountType = account.getAccountType();
+
+            st.setInt(1,accountType.ordinal());
             st.setInt(2,account.getCustId());
             st.setInt(3,account.getOpenBranchId());
 
@@ -77,9 +59,7 @@ public class AccountDAOImpl implements AccountDAO {
             ResultSet rs = st.executeQuery("SELECT * FROM account WHERE cust_id = "+custId);
 
             while (rs.next()) {
-                accounts.add(new Account(rs.getInt(1), rs.getString(2),rs.getInt(3),
-                        rs.getString(4),rs.getString(5),rs.getString(6),
-                        rs.getString(7),rs.getInt(8),rs.getFloat(9)));
+                accounts.add(Account.fromResultSet(rs));
             }
 
 

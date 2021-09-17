@@ -1,35 +1,14 @@
-package dao;
+package com.bank.dao;
 
 import com.bank.HashPwd;
-import com.model.Customer;
-import utils.MySQLConnection;
+import com.bank.model.Customer;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CustomerDAOImpl implements CustomerDAO {
+public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 
-    private Connection con = null;
-
-
-    @Override
-    public void connect() {
-        try {
-            con = MySQLConnection.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void disconnect() {
-        try {
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public List<Customer> getAllCustomers() {
@@ -44,7 +23,7 @@ public class CustomerDAOImpl implements CustomerDAO {
                 customerList.add(Customer.fromResultSet(rs));
             }
 
-            st.close();
+
 
         } catch (SQLException e) {
             e.printStackTrace();

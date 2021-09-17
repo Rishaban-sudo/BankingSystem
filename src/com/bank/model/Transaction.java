@@ -1,4 +1,4 @@
-package com.model;
+package com.bank.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

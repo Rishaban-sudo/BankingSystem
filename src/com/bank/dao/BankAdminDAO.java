@@ -1,4 +1,4 @@
-package dao;
+package com.bank.dao;
 
 public interface BankAdminDAO extends Dao {
 
