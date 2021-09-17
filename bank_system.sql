@@ -1,5 +1,4 @@
 /* table creation  */
-use bank_system;
 
 create table customer
 (
